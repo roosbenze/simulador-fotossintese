@@ -1,11 +1,12 @@
 // Lógica principal do jogo
 class GameLogic {
     constructor() {
-        this.currentTime = 12; // Hora atual (0-23)
+        this.currentTime = 22; // Hora atual (0-23) - INICIA À NOITE para forçar observação
         this.glucoseProduced = 0;
         this.maxGlucose = 3;
         this.isGameComplete = false;
         this.photosynthesisActive = false;
+        this.hasSeenNightMessage = false; // Para mostrar mensagem educativa
         
         this.init();
     }
@@ -58,7 +59,9 @@ class GameLogic {
         const photonWaves = document.getElementById('photon-waves');
         
         if (this.isDaytime()) {
+            // FASE CLARA - Fotossíntese ativa
             gardenScene.classList.remove('night');
+            gardenScene.classList.add('day');
             sun.classList.remove('night');
             this.activatePhotonWaves();
             
@@ -66,12 +69,23 @@ class GameLogic {
             const intensity = this.getSunIntensity();
             sun.style.opacity = intensity;
             
+            // Remover mensagem de noite se existir
+            this.hideNightMessage();
+            
         } else {
+            // FASE ESCURA - Sem fotossíntese
             gardenScene.classList.add('night');
+            gardenScene.classList.remove('day');
             sun.classList.add('night');
             this.deactivatePhotonWaves();
-            sun.style.opacity = '0.3';
+            sun.style.opacity = '0.2';
+            
+            // Mostrar mensagem educativa sobre a noite
+            this.showNightMessage();
         }
+        
+        // Atualizar indicador visual da planta
+        this.updatePlantState();
     }
     
     // Calcular intensidade do sol
@@ -86,53 +100,133 @@ class GameLogic {
         return 0.6 + (0.4 * (1 - distanceFromNoon / maxDistance));
     }
     
-    // Ativar ondas de fótons
+    // Ativar ondas de fótons direcionadas
     activatePhotonWaves() {
         const photonWaves = document.getElementById('photon-waves');
         
         // Limpar ondas existentes
         photonWaves.innerHTML = '';
         
-        // Criar novas ondas baseadas na intensidade
+        // Criar ondas direcionadas baseadas na intensidade
         const intensity = this.getSunIntensity();
-        const waveCount = Math.floor(intensity * 10);
+        const waveCount = Math.floor(intensity * 8);
         
         for (let i = 0; i < waveCount; i++) {
             setTimeout(() => {
-                this.createPhotonWave();
-            }, i * 200);
+                this.createDirectedPhotonWave();
+            }, i * 300);
         }
         
         // Continuar criando ondas enquanto for dia
         if (this.isDaytime()) {
             setTimeout(() => {
                 this.activatePhotonWaves();
-            }, 2000);
+            }, 2500);
         }
     }
     
-    // Criar onda de fóton individual
-    createPhotonWave() {
+    // Criar onda de fóton direcionada para a planta
+    createDirectedPhotonWave() {
         const photonWaves = document.getElementById('photon-waves');
         const wave = document.createElement('div');
-        wave.className = 'photon-wave';
+        wave.className = 'photon-wave-directed';
         
-        // Posição aleatória
-        wave.style.left = Math.random() * 150 + 'px';
-        wave.style.animationDuration = (1.5 + Math.random()) + 's';
+        // Posição inicial (do sol)
+        const startX = 40; // Posição do sol
+        const startY = 0;
         
-        photonWaves.appendChild(wave);
+        // Posição final (planta)
+        const endX = 150; // Posição da planta
+        const endY = 180;
         
-        // Remover após animação
-        setTimeout(() => {
-            wave.remove();
-        }, 2500);
+        // Criar múltiplas partículas para formar a onda
+        for (let j = 0; j < 5; j++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.className = 'photon-particle';
+                particle.innerHTML = '✦';
+                
+                // Posição inicial com pequena variação
+                particle.style.left = (startX + Math.random() * 20 - 10) + 'px';
+                particle.style.top = (startY + j * 5) + 'px';
+                
+                photonWaves.appendChild(particle);
+                
+                // Animar movimento em onda para a planta
+                setTimeout(() => {
+                    particle.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    particle.style.left = (endX + Math.random() * 40 - 20) + 'px';
+                    particle.style.top = (endY + Math.random() * 30 - 15) + 'px';
+                    particle.style.opacity = '0';
+                    particle.style.transform = 'scale(0.5)';
+                }, 50);
+                
+                // Remover após animação
+                setTimeout(() => {
+                    particle.remove();
+                }, 2100);
+            }, j * 100);
+        }
     }
     
     // Desativar ondas de fótons
     deactivatePhotonWaves() {
         const photonWaves = document.getElementById('photon-waves');
         photonWaves.innerHTML = '';
+    }
+    
+    // Mostrar mensagem educativa sobre a noite
+    showNightMessage() {
+        if (this.hasSeenNightMessage) return;
+        
+        const existingMessage = document.getElementById('night-message');
+        if (existingMessage) return;
+        
+        const message = document.createElement('div');
+        message.id = 'night-message';
+        message.className = 'educational-message night-message';
+        message.innerHTML = `
+            <div class="message-content">
+                <h3>🌙 FASE ESCURA (NOITE)</h3>
+                <p><strong>A fotossíntese não acontece à noite!</strong></p>
+                <p>As plantas precisam da luz do sol para produzir seu alimento.</p>
+                <p>💡 <em>Ajuste o relógio para o período do dia (6h às 18h)</em></p>
+                <button onclick="this.parentElement.parentElement.remove()" class="close-message">Entendi! ✓</button>
+            </div>
+        `;
+        
+        document.body.appendChild(message);
+        this.hasSeenNightMessage = true;
+    }
+    
+    // Esconder mensagem da noite
+    hideNightMessage() {
+        const message = document.getElementById('night-message');
+        if (message) {
+            message.remove();
+        }
+    }
+    
+    // Atualizar estado visual da planta
+    updatePlantState() {
+        const plant = document.querySelector('.plant-container');
+        const leaves = document.querySelectorAll('.leaf');
+        
+        if (this.isDaytime()) {
+            // Planta ativa durante o dia
+            plant.classList.remove('sleeping');
+            plant.classList.add('active');
+            leaves.forEach(leaf => {
+                leaf.style.filter = 'brightness(1.1) saturate(1.2)';
+            });
+        } else {
+            // Planta "dormindo" à noite
+            plant.classList.add('sleeping');
+            plant.classList.remove('active');
+            leaves.forEach(leaf => {
+                leaf.style.filter = 'brightness(0.7) saturate(0.8)';
+            });
+        }
     }
     
     // Verificar condições para fotossíntese
@@ -255,7 +349,8 @@ class GameLogic {
         this.glucoseProduced = 0;
         this.isGameComplete = false;
         this.photosynthesisActive = false;
-        this.currentTime = 12;
+        this.currentTime = 22; // SEMPRE REINICIA À NOITE
+        this.hasSeenNightMessage = false; // Reset da mensagem educativa
         
         // Resetar displays
         this.updateGlucoseDisplay();
@@ -263,7 +358,7 @@ class GameLogic {
         this.updateDayNightCycle();
         
         // Resetar slider
-        document.getElementById('time-slider').value = 12;
+        document.getElementById('time-slider').value = 22;
         
         // Resetar frutos
         for (let i = 1; i <= this.maxGlucose; i++) {
@@ -285,6 +380,9 @@ class GameLogic {
         
         // Resetar zona de fotossíntese
         document.getElementById('photosynthesis-zone').classList.remove('active');
+        
+        // Remover mensagens educativas
+        this.hideNightMessage();
     }
     
     // Obter estatísticas do jogo

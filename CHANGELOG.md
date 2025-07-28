@@ -5,6 +5,41 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2025-07-28
+
+### ✨ Melhorias Pedagógicas Implementadas
+- **Início noturno obrigatório**: Simulador sempre inicia às 22:00 para forçar observação do ciclo
+- **Raios solares direcionados**: Partículas de fótons em forma de onda indo do sol para a planta
+- **Fases bem diferenciadas**: Contraste visual claro entre fase escura e clara
+- **Mensagem educativa**: Explicação automática sobre a importância da luz solar
+- **Estados da planta**: Visual diferenciado entre planta "ativa" (dia) e "dormindo" (noite)
+
+### 🌙 Fase Escura (Noite) - Melhorada
+- **Cores noturnas**: Gradiente azul escuro para simular ambiente noturno
+- **Sol opaco**: Redução da opacidade para 0.2 durante a noite
+- **Planta dormindo**: Filtro visual com menos brilho e saturação
+- **Bloqueio de fotossíntese**: Processo impossível durante período noturno
+- **Modal educativo**: Mensagem explicativa sobre a necessidade de luz solar
+
+### ☀️ Fase Clara (Dia) - Aprimorada
+- **Raios direcionados**: Partículas douradas (✦) movendo-se do sol para a planta
+- **Animação de ondas**: Movimento suave e realista dos fótons
+- **Intensidade variável**: Mais raios ao meio-dia, menos na manhã/tarde
+- **Planta ativa**: Animação sutil de "respiração" e cores mais vibrantes
+- **Transição gradual**: Mudança suave entre estados dia/noite
+
+### 🎯 Melhorias de Usabilidade
+- **Feedback visual**: Estados da planta claramente diferenciados
+- **Transições suaves**: Animações de 1 segundo para mudanças de estado
+- **Mensagens contextuais**: Orientações pedagógicas no momento certo
+- **Reinício inteligente**: Sempre volta para a noite ao reiniciar o jogo
+
+### 🔧 Melhorias Técnicas
+- **Performance otimizada**: Animações mais eficientes
+- **Código modular**: Separação clara entre lógica de dia e noite
+- **Estados bem definidos**: Controle preciso das transições
+- **Cleanup automático**: Remoção adequada de elementos temporários
+
 ## [1.0.0] - 2025-07-26
 
 ### ✨ Adicionado
