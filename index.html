@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Fotossíntese - Jogo Educacional</title>
+    <meta name="description" content="Jogo educacional interativo sobre fotossíntese para alunos do 2º ano do Ensino Fundamental">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header com informações do jogo -->
+    <header class="game-header">
+        <h1>🌱 Simulador de Fotossíntese</h1>
+        <p class="subtitle">Descubra como as plantas produzem seu próprio alimento!</p>
+        
+        <!-- Controles de tempo -->
+        <div class="time-controls">
+            <label for="time-slider">Horário:</label>
+            <input type="range" id="time-slider" min="0" max="23" value="12" class="time-slider">
+            <span id="time-display">12:00</span>
+            <div class="day-night-indicator">
+                <span id="period-indicator">☀️ Dia</span>
+            </div>
+        </div>
+        
+        <!-- Progresso do jogo -->
+        <div class="progress-section">
+            <div class="progress-item">
+                <span>💧 Água coletada:</span>
+                <span id="water-count">0/6</span>
+            </div>
+            <div class="progress-item">
+                <span>💨 CO₂ coletado:</span>
+                <span id="co2-count">0/6</span>
+            </div>
+            <div class="progress-item">
+                <span>🍎 Glicose produzida:</span>
+                <span id="glucose-count">0/3</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Área principal do jogo -->
+    <main class="game-area">
+        <!-- Cenário do jardim -->
+        <div class="garden-scene" id="garden-scene">
+            
+            <!-- Sol e ondas de fótons -->
+            <div class="sun-container">
+                <div class="sun" id="sun">
+                    <div class="sun-rays"></div>
+                </div>
+                <div class="photon-waves" id="photon-waves"></div>
+            </div>
+            
+            <!-- Planta principal -->
+            <div class="plant-container">
+                <!-- Folhas (lado direito - entrada) -->
+                <div class="leaves-container">
+                    <div class="leaf leaf-main" id="leaf-main">
+                        <div class="chloroplast-indicator">🟢</div>
+                        <div class="photosynthesis-zone" id="photosynthesis-zone">
+                            <span class="zone-label">Zona de Fotossíntese</span>
+                        </div>
+                    </div>
+                    <div class="leaf leaf-secondary"></div>
+                </div>
+                
+                <!-- Caule -->
+                <div class="stem"></div>
+                
+                <!-- Raízes -->
+                <div class="roots-container">
+                    <div class="root root-main"></div>
+                    <div class="root root-secondary"></div>
+                    <div class="water-absorption-zone" id="water-zone">
+                        <span class="zone-label">Zona de Absorção</span>
+                    </div>
+                </div>
+                
+                <!-- Frutos (lado esquerdo - saída) -->
+                <div class="fruits-container" id="fruits-container">
+                    <div class="fruit-slot" id="fruit-1"></div>
+                    <div class="fruit-slot" id="fruit-2"></div>
+                    <div class="fruit-slot" id="fruit-3"></div>
+                </div>
+            </div>
+            
+            <!-- Subsolo com moléculas de água -->
+            <div class="underground">
+                <h3>💧 Água Subterrânea (H₂O)</h3>
+                <div class="molecules-container" id="water-molecules">
+                    <!-- Moléculas de água serão geradas dinamicamente -->
+                </div>
+            </div>
+            
+            <!-- Atmosfera com moléculas de CO₂ -->
+            <div class="atmosphere">
+                <h3>💨 Gás Carbônico (CO₂)</h3>
+                <div class="molecules-container" id="co2-molecules">
+                    <!-- Moléculas de CO₂ serão geradas dinamicamente -->
+                </div>
+            </div>
+            
+            <!-- Área de liberação de oxigênio -->
+            <div class="oxygen-release" id="oxygen-release">
+                <h3>🫧 Oxigênio Liberado (O₂)</h3>
+                <div class="oxygen-bubbles"></div>
+            </div>
+        </div>
+        
+        <!-- Painel de informações -->
+        <aside class="info-panel">
+            <div class="equation-display">
+                <h3>⚗️ Reação da Fotossíntese</h3>
+                <div class="chemical-equation">
+                    <span class="reactants">6CO₂ + 6H₂O</span>
+                    <span class="plus">+</span>
+                    <span class="energy">☀️ energia solar</span>
+                    <span class="arrow">→</span>
+                    <span class="products">C₆H₁₂O₆ + 6O₂</span>
+                </div>
+                <div class="equation-labels">
+                    <small>gás carbônico + água + luz solar → glicose + oxigênio</small>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h3>📋 Como Jogar</h3>
+                <ol>
+                    <li>Arraste as moléculas de <strong>água (H₂O)</strong> até as raízes</li>
+                    <li>Arraste as moléculas de <strong>CO₂</strong> até as folhas</li>
+                    <li>Ajuste o horário para ter <strong>luz solar</strong> (6h às 18h)</li>
+                    <li>Observe a <strong>fotossíntese</strong> acontecer na folha!</li>
+                    <li>Forme <strong>3 frutos de glicose</strong> para completar o jogo</li>
+                </ol>
+            </div>
+            
+            <div class="learning-objectives">
+                <h3>🎯 O que você vai aprender</h3>
+                <ul>
+                    <li>Como as plantas fazem seu próprio alimento</li>
+                    <li>A importância do Sol para a vida na Terra</li>
+                    <li>O papel da água e do gás carbônico</li>
+                    <li>Como as plantas produzem oxigênio</li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- Modal de vitória -->
+    <div class="modal" id="victory-modal">
+        <div class="modal-content">
+            <h2>🎉 Parabéns!</h2>
+            <p>Você completou o processo de fotossíntese!</p>
+            <p>As plantas usam a luz do sol, água e gás carbônico para produzir glicose (seu alimento) e liberar oxigênio para nós respirarmos.</p>
+            <button id="restart-btn" class="btn-primary">Jogar Novamente</button>
+            <button id="close-modal" class="btn-secondary">Fechar</button>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/molecules.js"></script>
+    <script src="js/game-logic.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+

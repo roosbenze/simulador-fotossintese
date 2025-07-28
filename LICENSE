@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2025 roosbenze
+Copyright (c) 2025 Simulador de Fotossíntese - Projeto Educacional
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+NOTA EDUCACIONAL:
+Este software foi desenvolvido especificamente para fins educacionais, 
+alinhado com a Base Nacional Comum Curricular (BNCC) brasileira para 
+o Ensino Fundamental. É livre para uso em escolas, instituições 
+educacionais e para aprendizado pessoal.
+
+CORREÇÕES CIENTÍFICAS IMPLEMENTADAS:
+- Equação química corrigida: 6CO₂ + 6H₂O + energia solar → C₆H₁₂O₆ + 6O₂
+- Representação adequada da produção de oxigênio
+- Papel da clorofila nas folhas destacado
+- Ciclo dia/noite cientificamente preciso
+
+Para suporte educacional, consulte a documentação na pasta docs/
+
