@@ -1,1 +1,1077 @@
+/* Reset e configurações básicas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom, #87CEEB 0%, #98FB98 50%, #8B4513 70%, #654321 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Cabeçalho */
+.header {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #2E7D32;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    color: #555;
+    font-size: 1.1rem;
+}
+
+/* Painel de controles */
+.controls-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.time-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.time-control label {
+    font-weight: bold;
+    color: #333;
+}
+
+#time-slider {
+    width: 200px;
+    height: 8px;
+    background: linear-gradient(to right, #1a1a2e, #16213e, #0f3460, #533483);
+    border-radius: 5px;
+    outline: none;
+}
+
+#time-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #FFD700;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#time-display {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+    min-width: 60px;
+}
+
+#day-night-indicator {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#day-night-indicator.day {
+    background: #FFD700;
+    color: #333;
+}
+
+#day-night-indicator.night {
+    background: #1a1a2e;
+    color: #fff;
+}
+
+.game-stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+}
+
+.stat-icon {
+    font-size: 1.2rem;
+}
+
+.restart-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.restart-btn:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
+/* Cenário principal */
+.main-scene {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    transition: all 1s ease;
+}
+
+/* Camada do céu */
+.sky-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom, #87CEEB, #B0E0E6);
+    transition: all 1s ease;
+}
+
+.sky-layer.night {
+    background: linear-gradient(to bottom, #191970, #2F4F4F);
+}
+
+/* Sol */
+.sun {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #FFD700, #FFA500);
+    border-radius: 50%;
+    transition: all 1s ease;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+}
+
+.sun.night {
+    opacity: 0.2;
+    box-shadow: none;
+}
+
+.sun-rays {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 120px;
+    height: 120px;
+    background: 
+        linear-gradient(0deg, transparent 40%, rgba(255, 215, 0, 0.3) 50%, transparent 60%),
+        linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.3) 50%, transparent 60%),
+        linear-gradient(90deg, transparent 40%, rgba(255, 215, 0, 0.3) 50%, transparent 60%),
+        linear-gradient(135deg, transparent 40%, rgba(255, 215, 0, 0.3) 50%, transparent 60%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Nuvens */
+.clouds {
+    position: absolute;
+    top: 5%;
+    right: 10%;
+    width: 200px;
+    height: 60px;
+}
+
+.cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.8;
+}
+
+.cloud-1 {
+    width: 80px;
+    height: 40px;
+    top: 0;
+    left: 0;
+    animation: float 15s ease-in-out infinite;
+}
+
+.cloud-2 {
+    width: 60px;
+    height: 30px;
+    top: 20px;
+    right: 0;
+    animation: float 12s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateX(0px) translateY(0px); }
+    50% { transform: translateX(20px) translateY(-10px); }
+}
+
+/* Moléculas de CO₂ */
+.co2-molecules {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: 60%;
+}
+
+.co2-molecule {
+    position: absolute;
+    background: #E0E0E0;
+    border: 2px solid #999;
+    border-radius: 15px;
+    padding: 0.3rem 0.6rem;
+    cursor: grab;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.co2-molecule:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.co2-molecule:active {
+    cursor: grabbing;
+}
+
+.co2-molecule:nth-child(1) { top: 10%; left: 20%; }
+.co2-molecule:nth-child(2) { top: 30%; left: 70%; }
+.co2-molecule:nth-child(3) { top: 50%; left: 15%; }
+.co2-molecule:nth-child(4) { top: 20%; left: 85%; }
+.co2-molecule:nth-child(5) { top: 60%; left: 50%; }
+.co2-molecule:nth-child(6) { top: 40%; left: 35%; }
+
+/* Raios solares direcionados */
+.solar-rays {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 300px;
+    height: 200px;
+    pointer-events: none;
+}
+
+.photon-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #FFD700;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #FFD700;
+    animation: photon-travel 3s linear infinite;
+}
+
+@keyframes photon-travel {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(200px, 150px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Camada da superfície */
+.surface-layer {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    background: linear-gradient(to bottom, #90EE90, #228B22);
+}
+
+.grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            #32CD32 0px,
+            #32CD32 3px,
+            #228B22 3px,
+            #228B22 6px
+        );
+}
+
+/* Container da planta */
+.plant-container {
+    position: absolute;
+    top: -60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 400px;
+}
+
+/* Partes aéreas */
+.aerial-parts {
+    position: relative;
+    width: 100%;
+    height: 60%;
+}
+
+/* Meristema apical */
+.meristem-apical {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.flower {
+    font-size: 2rem;
+    animation: sway 4s ease-in-out infinite;
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+}
+
+/* Folhas expandidas */
+.leaves-container {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 100px;
+}
+
+.leaf {
+    position: absolute;
+    width: 80px;
+    height: 60px;
+    background: linear-gradient(45deg, #228B22, #32CD32, #90EE90);
+    border-radius: 0 100% 0 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.leaf-left {
+    top: 0;
+    left: 0;
+    transform: rotate(-20deg);
+}
+
+.leaf-right {
+    top: 0;
+    right: 0;
+    transform: rotate(20deg) scaleX(-1);
+}
+
+.leaf:hover {
+    transform: scale(1.1) rotate(-20deg);
+    filter: brightness(1.2);
+}
+
+.leaf-right:hover {
+    transform: scale(1.1) rotate(20deg) scaleX(-1);
+}
+
+.leaf-surface {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+}
+
+.leaf-veins {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: #1F5F1F;
+    transform: translateY(-50%);
+}
+
+.leaf-veins::before,
+.leaf-veins::after {
+    content: '';
+    position: absolute;
+    width: 40%;
+    height: 1px;
+    background: #1F5F1F;
+    top: 50%;
+    left: 20%;
+}
+
+.leaf-veins::before {
+    transform: rotate(30deg) translateY(-50%);
+}
+
+.leaf-veins::after {
+    transform: rotate(-30deg) translateY(-50%);
+}
+
+.photosynthesis-zone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3px dashed transparent;
+    border-radius: inherit;
+    transition: all 0.3s ease;
+}
+
+.photosynthesis-zone.active {
+    border-color: #FFD700;
+    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.3);
+    animation: photosynthesis-glow 2s ease-in-out infinite;
+}
+
+@keyframes photosynthesis-glow {
+    0%, 100% { box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.6); }
+}
+
+/* Dreno */
+.drain-flower {
+    position: absolute;
+    top: 10%;
+    right: -20%;
+}
+
+.small-flower {
+    font-size: 1.5rem;
+}
+
+/* Frutos */
+.fruits-container {
+    position: absolute;
+    top: 30%;
+    right: -30%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fruit {
+    font-size: 1.8rem;
+    opacity: 0.3;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.fruit.filled {
+    opacity: 1;
+    animation: fruit-glow 2s ease-in-out infinite;
+}
+
+@keyframes fruit-glow {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Caule */
+.stem {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 200px;
+    background: linear-gradient(to right, #8B4513, #A0522D, #8B4513);
+    border-radius: 10px;
+}
+
+.vascular-system {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 100%;
+}
+
+.xylem {
+    position: absolute;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: #4169E1;
+    border-radius: 3px;
+}
+
+.phloem {
+    position: absolute;
+    right: 0;
+    width: 6px;
+    height: 100%;
+    background: #DC143C;
+    border-radius: 3px;
+}
+
+.xylem-flow {
+    position: absolute;
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(to top, transparent, #87CEEB, transparent);
+    left: 1px;
+    animation: xylem-flow 3s linear infinite;
+}
+
+@keyframes xylem-flow {
+    0% {
+        bottom: -20px;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        bottom: 100%;
+        opacity: 0;
+    }
+}
+
+.phloem-flow {
+    position: absolute;
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, #FFD700, transparent);
+    right: 1px;
+    animation: phloem-flow 4s linear infinite;
+}
+
+@keyframes phloem-flow {
+    0% {
+        top: -20px;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+/* Folhas fonte */
+.source-leaves {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 40px;
+}
+
+.source-leaf {
+    position: absolute;
+    width: 40px;
+    height: 30px;
+    background: linear-gradient(45deg, #228B22, #32CD32);
+    border-radius: 0 100% 0 100%;
+}
+
+.source-left {
+    left: 0;
+    transform: rotate(-30deg);
+}
+
+.source-right {
+    right: 0;
+    transform: rotate(30deg) scaleX(-1);
+}
+
+/* Camada do solo */
+.soil-layer {
+    position: absolute;
+    top: 60%;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: linear-gradient(to bottom, #8B4513, #654321);
+}
+
+/* Zona de absorção */
+.absorption-zone {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 60px;
+    cursor: pointer;
+}
+
+.zone-highlight {
+    width: 100%;
+    height: 100%;
+    border: 3px dashed #00BFFF;
+    border-radius: 10px;
+    background: rgba(0, 191, 255, 0.1);
+    animation: zone-pulse 2s ease-in-out infinite;
+}
+
+@keyframes zone-pulse {
+    0%, 100% { 
+        border-color: #00BFFF;
+        box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+    }
+    50% { 
+        border-color: #87CEEB;
+        box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+    }
+}
+
+/* Sistema radicular */
+.root-system {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 80%;
+}
+
+.main-root {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 60%;
+    background: linear-gradient(to bottom, #8B4513, #A0522D);
+    border-radius: 4px;
+}
+
+.secondary-roots {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 60%;
+}
+
+.root {
+    position: absolute;
+    background: linear-gradient(to bottom, #8B4513, #A0522D);
+    border-radius: 2px;
+}
+
+.root-1 {
+    width: 4px;
+    height: 40%;
+    top: 0;
+    left: 20%;
+    transform: rotate(-30deg);
+}
+
+.root-2 {
+    width: 4px;
+    height: 40%;
+    top: 0;
+    right: 20%;
+    transform: rotate(30deg);
+}
+
+.root-3 {
+    width: 3px;
+    height: 30%;
+    top: 30%;
+    left: 10%;
+    transform: rotate(-45deg);
+}
+
+.root-4 {
+    width: 3px;
+    height: 30%;
+    top: 30%;
+    right: 10%;
+    transform: rotate(45deg);
+}
+
+.root-hairs {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 2px,
+            #A0522D 2px,
+            #A0522D 3px
+        );
+}
+
+/* Camada do subsolo */
+.subsoil-layer {
+    position: absolute;
+    top: 85%;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    background: linear-gradient(to bottom, #654321, #4A4A4A);
+}
+
+/* Lençol freático */
+.water-table {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 191, 255, 0.3), rgba(0, 191, 255, 0.6));
+}
+
+.water-surface {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #00BFFF;
+    animation: water-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes water-shimmer {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Moléculas de água */
+.water-molecules {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: 80%;
+}
+
+.water-molecule {
+    position: absolute;
+    background: #87CEEB;
+    border: 2px solid #4169E1;
+    border-radius: 15px;
+    padding: 0.3rem 0.6rem;
+    cursor: grab;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.water-molecule:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.water-molecule:active {
+    cursor: grabbing;
+}
+
+.water-molecule:nth-child(1) { top: 20%; left: 15%; }
+.water-molecule:nth-child(2) { top: 60%; left: 70%; }
+.water-molecule:nth-child(3) { top: 40%; left: 25%; }
+.water-molecule:nth-child(4) { top: 80%; left: 85%; }
+.water-molecule:nth-child(5) { top: 30%; left: 55%; }
+.water-molecule:nth-child(6) { top: 70%; left: 40%; }
+
+/* Extensão do xilema */
+.xylem-extension {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 40px;
+    background: #4169E1;
+    border-radius: 3px;
+}
+
+/* Labels */
+.label {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #333;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.meristem-label {
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.leaf-label {
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.drain-label {
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.fruit-label {
+    top: -25px;
+    right: -20px;
+}
+
+.source-label {
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.absorption-label {
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Painel de informações */
+.info-panel {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    margin: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.equation-display {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.equation {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.reactants {
+    color: #2196F3;
+}
+
+.energy {
+    color: #FF9800;
+}
+
+.products {
+    color: #4CAF50;
+}
+
+.arrow {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.instructions, .learning-objectives {
+    margin-bottom: 2rem;
+}
+
+.instructions h3, .learning-objectives h3 {
+    color: #2E7D32;
+    margin-bottom: 1rem;
+}
+
+.instructions ol, .learning-objectives ul {
+    padding-left: 2rem;
+}
+
+.instructions li, .learning-objectives li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+/* Legenda do sistema vascular */
+.vascular-legend {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.legend-color {
+    width: 20px;
+    height: 10px;
+    border-radius: 5px;
+}
+
+.xylem-color {
+    background: #4169E1;
+}
+
+.phloem-color {
+    background: #DC143C;
+}
+
+/* Moléculas */
+.molecule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+.molecule-label {
+    pointer-events: none;
+}
+
+.molecule.dragging {
+    z-index: 1000;
+    transform: scale(1.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Estados de jogo */
+.game-complete {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 1000;
+}
+
+.game-complete h2 {
+    color: #4CAF50;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.game-complete p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .controls-panel {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .game-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .main-scene {
+        height: 70vh;
+    }
+    
+    .plant-container {
+        width: 250px;
+        height: 350px;
+    }
+    
+    .info-panel {
+        margin: 1rem;
+        padding: 1rem;
+    }
+    
+    .equation {
+        font-size: 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .vascular-legend {
+        position: static;
+        transform: none;
+        margin: 1rem;
+    }
+}
+
+/* Animações de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header, .controls-panel, .info-panel {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.main-scene {
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
 
